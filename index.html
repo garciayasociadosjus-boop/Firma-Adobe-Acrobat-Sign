@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta charset="UTF-8">
     <title>Guía de Firma Digital - Estudio Garcia & Asociados</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,12 +11,64 @@
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@600;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <style>
-/* 1. THE SETUP */
-
-* {
-  box-sizing: border-box;
+/* =========================================
+  PANTALLA DE BIENVENIDA
+ =========================================
+*/
+#welcome-screen {
+  position: fixed; /* Tapa toda la pantalla */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #0d1b2a; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Por encima de todo */
+  transition: opacity 0.5s ease; /* Para desaparecer suavemente */
+  padding: 20px;
+  text-align: center;
 }
+
+#welcome-screen h1 {
+  font-family: 'Crimson Text', serif;
+  font-size: 50px;
+  color: #FFFFFF;
+  margin-bottom: 20px;
+}
+
+#welcome-screen p {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 20px;
+  color: #E5E7EB;
+  margin-bottom: 40px;
+  max-width: 500px;
+}
+
+#start-button {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+  background-color: #1e293b;
+  border: 2px solid #374151;
+  padding: 15px 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#start-button:hover {
+  background-color: #374151;
+  border-color: #E5E7EB;
+}
+
+/* 1. THE SETUP (Escritorio) */
+* { box-sizing: border-box; }
 
 body {
   background-color: #e2e8f0;
@@ -30,7 +83,6 @@ body {
 
 .slide-container {
   align-items: center;
-  /* Fondo base y degradado "destello" */
   background: radial-gradient(ellipse at 50% -40%, rgba(31, 41, 55, 0.5) 0%, #0d1b2a 55%);
   border-radius: 8px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -39,12 +91,12 @@ body {
   height: 720px;
   justify-content: flex-start;
   overflow: hidden;
-  padding: 60px 60px 120px 60px; /* Padding original */
+  padding: 60px 60px 120px 60px;
   position: relative;
   width: 1280px;
 }
 
-/* 2. NUEVA CAPA DE MARCA DE AGUA (detrás del contenido) */
+/* 2. MARCA DE AGUA */
 .slide-container::before {
   content: '';
   position: absolute;
@@ -53,78 +105,59 @@ body {
   width: 100%;
   height: 100%;
   background-image: url('https://i.postimg.cc/LsPWpjy1/BALANZA1.jpg');
-  background-size: cover; /* Para que cubra toda la pantalla */
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: center; /* Centrada */
-  
-  /* OPACIDAD SÓLO PARA ESTA CAPA */
+  background-position: center;
   opacity: 0.08; 
-  
-  z-index: 0; /* Se pone detrás del contenido */
-  border-radius: 8px; /* Para que coincida con el contenedor */
+  z-index: 0;
+  border-radius: 8px;
 }
 
-/* 3. CONTENIDO (POR ENCIMA DE LA MARCA DE AGUA) */
-/* Todos los hijos directos del slide-container deben estar por encima */
+/* 3. CONTENIDO */
 .slide-container > * {
-    position: relative; /* Necesario para que z-index funcione */
-    z-index: 2; /* Pone todo el contenido por encima del ::before */
+    position: relative;
+    z-index: 2;
 }
 
-/* 4. NUEVA TIPOGRAFÍA (de WEB.HTML) */
-
-/* Fuente de Encabezados: Crimson Text */
+/* 4. TIPOGRAFÍA (Escritorio) */
 .slide-container h1,
 .slide-container h2,
 .slide-container h3 {
-  color: #FFFFFF; /* Blanco puro, como en la web */
+  color: #FFFFFF;
   font-weight: 700;
   font-family: 'Crimson Text', serif;
   margin: 0;
 }
-
-/* Fuente de Cuerpo de Texto: Source Sans Pro */
 .slide-container p,
 .slide-container li,
 .slide-container .subtitle {
-  color: #E5E7EB; /* Color 'silver' de la web */
+  color: #E5E7EB;
   font-family: 'Source Sans Pro', sans-serif;
 }
-
-/* Tamaños de fuente consistentes */
-
-.slide-container h1 {
-  font-size: 70px;
-}
-
+.slide-container h1 { font-size: 70px; }
 .slide-container .slide-title {
-  font-size: 44px; /* Un poco más grande para 'Crimson Text' */
+  font-size: 44px;
   font-weight: 700;
   margin-bottom: 40px;
   text-align: left;
   width: 100%;
 }
-
 .slide-container h3 {
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 15px;
 }
-
-/* Tamaño de texto de cuerpo unificado */
 .slide-container p,
 .slide-container li,
 .slide-container .subtitle {
-  font-size: 22px; /* Más grande y legible */
+  font-size: 22px;
   line-height: 1.6;
 }
-
 .slide-container .subtitle {
   font-weight: 400;
   margin: 20px auto;
-  color: #E5E7EB; /* Color 'silver' */
+  color: #E5E7EB;
 }
-
 .slide-container .content-area {
   align-items: center;
   display: flex;
@@ -133,15 +166,12 @@ body {
   width: 100%;
 }
 
-/* 5. DEFINICIONES DE LAYOUT (Ajustes menores) */
-
+/* 5. LAYOUTS (Escritorio) */
 .title-layout {
   text-align: center;
-  margin-top: 150px; /* Centrar verticalmente en el layout */
-  width: 100%; /* Asegurar que ocupe todo el ancho */
+  margin-top: 150px;
+  width: 100%;
 }
-
-/* Layout de Dos Columnas */
 .two-column {
   align-items: center;
   display: grid;
@@ -149,54 +179,44 @@ body {
   gap: 50px;
   width: 100%;
 }
-
 .two-column ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
-
 .two-column li {
   margin-bottom: 20px;
   padding-left: 35px;
   position: relative;
 }
-
-/* Icono de viñeta (Balanza) */
 .two-column li::before {
-  content: '\f24e'; /* Icono 'fa-balance-scale-right' (más sutil) */
+  content: '\f24e';
   font-family: 'Font Awesome 6 Free';
   font-weight: 900;
-  color: #E5E7EB; /* Color 'silver' */
+  color: #E5E7EB;
   position: absolute;
   left: 0;
   top: 5px;
   font-size: 20px;
   opacity: 0.7;
 }
-
-/* Resaltar texto 'strong' con blanco (más elegante) */
 .slide-container strong {
   color: #FFFFFF;
-  font-weight: 600; /* Un poco más grueso */
+  font-weight: 600;
 }
-
 .image-wrapper {
   border-radius: 12px;
   height: 400px;
   overflow: hidden;
   width: 100%;
   background-color: #1e293b;
-  border: 1px solid rgba(229, 229, 231, 0.2); /* Borde 'silver' */
+  border: 1px solid rgba(229, 229, 231, 0.2);
 }
-
 .image-wrapper img {
   height: 100%;
   object-fit: contain;
   width: 100%;
 }
-
-/* Layout de Título de Sección */
 .section-title-layout {
   align-items: center;
   display: flex;
@@ -206,48 +226,42 @@ body {
   text-align: center;
   width: 100%;
 }
-
 .section-title-layout h2 {
   font-size: 60px;
   margin-bottom: 20px;
 }
-
 .section-title-layout p {
   font-size: 22px;
   margin: 0 auto;
   max-width: 700px;
   color: #E5E7EB;
 }
-
 .section-title-layout hr {
-  background-color: #E5E7EB; /* Color 'silver' */
+  background-color: #E5E7EB;
   border: none;
-  height: 2px; /* Más fino */
+  height: 2px;
   margin: 30px auto;
   width: 100px;
   opacity: 0.5;
 }
 
-/* 6. NUEVA DIAPOSITIVA FINAL (Contacto) */
+/* 6. LAYOUT CONTACTO (Escritorio) */
 .contact-layout {
   text-align: center;
   width: 100%;
   align-self: center;
 }
-
 .contact-layout h2 {
   font-size: 80px;
-  margin-bottom: 40px; /* Más espacio */
+  margin-bottom: 40px;
   color: #FFFFFF;
 }
-
 .contact-layout .contact-grid {
   display: flex;
   justify-content: center;
   gap: 40px;
   flex-wrap: wrap;
 }
-
 .contact-layout .contact-item {
   display: flex;
   align-items: center;
@@ -256,69 +270,119 @@ body {
   font-size: 20px;
   color: #E5E7EB;
 }
-
 .contact-layout .contact-item i {
   font-size: 24px;
   color: #E5E7EB;
-  width: 30px; /* Ancho fijo para alinear */
+  width: 30px;
 }
-
 .contact-layout .contact-item a {
   color: #E5E7EB;
   text-decoration: none;
   transition: color 0.3s ease;
 }
+.contact-layout .contact-item a:hover { color: #FFFFFF; }
 
-.contact-layout .contact-item a:hover {
-  color: #FFFFFF;
-}
-
-/* 7. NUEVO FOOTER (de WEB.HTML) */
+/* 7. FOOTER */
 .slide-footer {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #0A0E1A; /* Color '--primary' de la web */
-  padding: 25px 60px; /* Más padding para hacerlo más grande */
+  background-color: #0A0E1A;
+  padding: 25px 60px;
   text-align: center;
-  font-size: 20px; /* Letra más grande */
+  font-size: 20px;
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 600;
-  color: #E5E7EB; /* Color 'silver' */
   z-index: 10;
-  border-top: 1px solid #374151; /* Borde 'accent' */
-  
-  /* === EFECTO "WOW": LUZ LÍQUIDA === */
-  /* 1. Creamos el gradiente de luz */
-  background-image: linear-gradient(
-    90deg, 
-    #E5E7EB, /* Color base (silver) */
-    #FFFFFF, /* Luz blanca brillante */
-    #E5E7EB  /* Color base (silver) */
-  );
-  background-size: 200% auto; /* El doble de ancho para que se mueva */
-  
-  /* 2. Aplicamos el gradiente SOLO al texto */
+  border-top: 1px solid #374151;
+  background-image: linear-gradient( 90deg, #E5E7EB, #FFFFFF, #E5E7EB );
+  background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
-  
-  /* 3. Ocultamos el color de texto original */
   color: transparent;
   -webkit-text-fill-color: transparent;
-  
-  /* 4. Animamos la posición del gradiente (6s, lento, lineal) */
   animation: liquid-light 6s linear infinite;
-  /* La animación "subtle-fade" anterior ha sido eliminada */
 }
 
-/* 8. KEYFRAMES PARA LA LUZ LÍQUIDA */
+/* 8. ANIMACIÓN FOOTER */
 @keyframes liquid-light {
-  0% {
-    background-position: 200% 0; /* Empieza desde la derecha */
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* =========================================
+  ESTILO PARA OCULTAR REPRODUCTOR
+ =========================================
+*/
+.audio-player-wrapper-hidden {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+  z-index: -1;
+}
+
+/*
+ =========================================
+  BLOQUE: ESTILOS PARA CELULAR
+ =========================================
+*/
+@media (max-width: 768px) {
+  
+  body {
+    padding: 0;
+    gap: 0;
   }
-  100% {
-    background-position: -200% 0; /* Termina a la izquierda */
+  
+  #welcome-screen h1 { font-size: 36px; }
+  #welcome-screen p { font-size: 18px; }
+
+  .slide-container {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    border-radius: 0;
+    padding: 60px 20px 120px 20px; /* Padding solo para footer */
+  }
+  
+  /* Ajuste de fuentes */
+  .slide-container h1 { font-size: 44px; line-height: 1.2; }
+  .slide-container .subtitle { font-size: 18px; }
+  .slide-container .slide-title { font-size: 32px; text-align: center; }
+  .slide-container p, .slide-container li { font-size: 18px; }
+  .title-layout { margin-top: 80px; }
+
+  /* Apilar las dos columnas */
+  .two-column {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .two-column > div:nth-child(2) { grid-row: 1; }
+  .image-wrapper { height: 240px; }
+  
+  /* Títulos de sección */
+  .section-title-layout h2 { font-size: 44px; line-height: 1.2; }
+  .section-title-layout p { font-size: 18px; }
+
+  /* Contacto */
+  .contact-layout h2 { font-size: 44px; }
+  .contact-layout .contact-grid {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .contact-layout .contact-item { font-size: 16px; }
+  
+  /* Footer se achica */
+  .slide-footer {
+    font-size: 16px;
+    padding: 20px;
   }
 }
 
@@ -326,12 +390,21 @@ body {
 </head>
 <body>
 
+<div id="welcome-screen">
+    <h1>Guía de Firma Digital</h1>
+    <p>Esta guía incluye una narración de audio que se reproducirá automáticamente. Presione "Comenzar" para iniciar.</p>
+    <button id="start-button">COMENZAR GUÍA</button>
+</div>
+
 
 <div class="slide-container" id="slide1">
     <div class="title-layout">
         <h1>Cómo Firmar con Adobe Acrobat Sign</h1>
         <p class="subtitle">Guía para clientes de Estudio Garcia & Asociados</p>
     </div>
+    
+    <div class="audio-player-wrapper-hidden" id="audio-1"></div>
+
     <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
 </div>
 
@@ -342,6 +415,9 @@ body {
         <hr>
         <p>Un método seguro y digital para validar sus acuerdos con nosotros.</p>
     </div>
+
+    <div class="audio-player-wrapper-hidden" id="audio-2"></div>
+
     <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
 </div>
 
@@ -363,6 +439,9 @@ body {
             </div>
         </div>
     </div>
+
+    <div class="audio-player-wrapper-hidden" id="audio-3"></div>
+
     <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
 </div>
 
@@ -384,6 +463,9 @@ body {
             </div>
         </div>
     </div>
+
+    <div class="audio-player-wrapper-hidden" id="audio-4"></div>
+
     <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
 </div>
 
@@ -405,6 +487,9 @@ body {
             </div>
         </div>
     </div>
+
+    <div class="audio-player-wrapper-hidden" id="audio-5"></div>
+
     <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
 </div>
 
@@ -427,6 +512,9 @@ body {
             </div>
         </div>
     </div>
+
+    <div class="audio-player-wrapper-hidden" id="audio-6"></div>
+
     <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
 </div>
 
@@ -449,8 +537,115 @@ body {
             </div>
         </div>
     </div>
+
+    <div class="audio-player-wrapper-hidden" id="audio-7"></div>
+
     <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    
+    const startButton = document.getElementById('start-button');
+    const welcomeScreen = document.getElementById('welcome-screen');
+
+    // Nombres de sus archivos de audio en GitHub
+    const audioFileNames = [
+      '1.mp3', // Audio 1
+      '2.mp3', // Audio 2
+      '3.mp3', // Audio 3
+      '4.mp3', // Audio 4
+      '5.mp3', // Audio 5
+      '6.mp3', // Audio 6
+      '7.mp3'  // Audio 7
+    ];
+
+    // --- Función para Cargar un Audio ---
+    function loadAudio(audioNumber, fileName) {
+      const container = document.getElementById('audio-' + audioNumber);
+      // Solo lo carga si está vacío (para no cargarlo 2 veces)
+      if (container && container.innerHTML === '') {
+        const audio = document.createElement('audio');
+        audio.src = fileName; // El navegador busca el archivo en la misma carpeta
+        audio.autoplay = true;
+        audio.preload = 'auto';
+        audio.id = 'player-' + audioNumber;
+        
+        // Manejo de errores de autoplay (especialmente en iPhone)
+        audio.play().catch(error => {
+          // Si falla el autoplay, no hacemos nada,
+          // pero evitamos un error en la consola.
+          console.log("Autoplay bloqueado para el audio " + audioNumber + ", pero el clic inicial lo permitió.");
+        });
+        
+        container.appendChild(audio);
+      }
+    }
+
+    // --- Función para Detener y Descargar un Audio ---
+    function stopAudio(audioNumber) {
+      const container = document.getElementById('audio-' + audioNumber);
+      if (container) {
+        const audio = container.querySelector('audio');
+        if (audio) {
+          audio.pause();
+          audio.currentTime = 0; // Rewind
+          container.innerHTML = ''; // Elimina el audio para liberar memoria
+        }
+      }
+    }
+
+    // --- Lógica del Observador ---
+    const observerCallback = (entries, observer) => {
+      entries.forEach(entry => {
+        const audioNumber = entry.target.id.replace('slide', '');
+        const fileName = audioFileNames[audioNumber - 1];
+
+        if (entry.isIntersecting) {
+          // Si la diapositiva ESTÁ EN PANTALLA
+          // No reproducir el audio 1, porque ya lo hicimos con el botón.
+          if (audioNumber !== '1') {
+             loadAudio(audioNumber, fileName);
+          }
+        } else {
+          // Si la diapositiva SE FUE DE PANTALLA, detiene su audio
+          stopAudio(audioNumber);
+        }
+      });
+    };
+
+    // --- Configuración del Observador ---
+    const observerOptions = {
+      root: null,
+      threshold: 0.6 // Necesita ver el 60% de la diapositiva
+    };
+
+    // Crea el observador
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // --- Acción del Botón "COMENZAR" ---
+    startButton.addEventListener('click', () => {
+      // 1. Oculta la pantalla de bienvenida
+      welcomeScreen.style.opacity = '0';
+      setTimeout(() => {
+        welcomeScreen.style.display = 'none';
+      }, 500);
+
+      // 2. Carga y reproduce MANUALMENTE solo el PRIMER audio.
+      // Esta acción está atada directamente al clic del usuario
+      // y será permitida por el celular.
+      loadAudio(1, audioFileNames[0]);
+
+      // 3. Le dice al observador que empiece a VIGILAR todas las diapositivas
+      const slides = document.querySelectorAll('.slide-container');
+      slides.forEach(slide => {
+        observer.observe(slide);
+      });
+    });
+
+  });
+</script>
+
 
 </body>
 </html>
