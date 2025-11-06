@@ -560,56 +560,52 @@ body {
       '7.mp3'  // Audio 7
     ];
 
-    // --- Función para Cargar un Audio ---
-    function loadAudio(audioNumber, fileName) {
-      const container = document.getElementById('audio-' + audioNumber);
-      // Solo lo carga si está vacío (para no cargarlo 2 veces)
-      if (container && container.innerHTML === '') {
-        const audio = document.createElement('audio');
-        audio.src = fileName; // El navegador busca el archivo en la misma carpeta
-        audio.autoplay = true;
-        audio.preload = 'auto';
-        audio.id = 'player-' + audioNumber;
+    // --- Función para PRE-CARGAR todos los audios ---
+    // Esta función crea los 7 reproductores y los deja listos (pero pausados)
+    function preloadAllAudios() {
+      audioFileNames.forEach((fileName, index) => {
+        const audioNumber = index + 1;
+        const container = document.getElementById('audio-' + audioNumber);
         
-        // Manejo de errores de autoplay (especialmente en iPhone)
-        audio.play().catch(error => {
-          // Si falla el autoplay, no hacemos nada,
-          // pero evitamos un error en la consola.
-          console.log("Autoplay bloqueado para el audio " + audioNumber + ", pero el clic inicial lo permitió.");
-        });
-        
-        container.appendChild(audio);
-      }
-    }
-
-    // --- Función para Detener y Descargar un Audio ---
-    function stopAudio(audioNumber) {
-      const container = document.getElementById('audio-' + audioNumber);
-      if (container) {
-        const audio = container.querySelector('audio');
-        if (audio) {
-          audio.pause();
-          audio.currentTime = 0; // Rewind
-          container.innerHTML = ''; // Elimina el audio para liberar memoria
+        if (container && container.innerHTML === '') {
+          const audio = document.createElement('audio');
+          audio.src = fileName;
+          audio.id = 'player-' + audioNumber;
+          audio.preload = 'auto'; // Le dice al navegador que lo vaya cargando
+          audio.loop = false;
+          
+          // Silenciamos el audio por defecto para que el navegador lo permita
+          audio.muted = true; 
+          
+          container.appendChild(audio);
         }
-      }
+      });
     }
 
     // --- Lógica del Observador ---
     const observerCallback = (entries, observer) => {
       entries.forEach(entry => {
         const audioNumber = entry.target.id.replace('slide', '');
-        const fileName = audioFileNames[audioNumber - 1];
+        const player = document.getElementById('player-'s + audioNumber);
+        
+        if (!player) return; // Si el audio no está listo, no hace nada
 
         if (entry.isIntersecting) {
           // Si la diapositiva ESTÁ EN PANTALLA
-          // No reproducir el audio 1, porque ya lo hicimos con el botón.
-          if (audioNumber !== '1') {
-             loadAudio(audioNumber, fileName);
+          player.currentTime = 0; // Rebobina
+          player.muted = false;   // LE QUITA EL SILENCIO
+          
+          // Intenta reproducir
+          let playPromise = player.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              // El autoplay falló, pero no bloqueamos la app
+              console.log("Autoplay bloqueado para " + audioNumber);
+            });
           }
         } else {
-          // Si la diapositiva SE FUE DE PANTALLA, detiene su audio
-          stopAudio(audioNumber);
+          // Si la diapositiva SE FUE DE PANTALLA
+          player.pause();
         }
       });
     };
@@ -631,16 +627,30 @@ body {
         welcomeScreen.style.display = 'none';
       }, 500);
 
-      // 2. Carga y reproduce MANUALMENTE solo el PRIMER audio.
-      // Esta acción está atada directamente al clic del usuario
-      // y será permitida por el celular.
-      loadAudio(1, audioFileNames[0]);
+      // 2. PRE-CARGA los 7 audios (invisibles y silenciados)
+      preloadAllAudios();
 
       // 3. Le dice al observador que empiece a VIGILAR todas las diapositivas
       const slides = document.querySelectorAll('.slide-container');
       slides.forEach(slide => {
         observer.observe(slide);
       });
+      
+      // 4. Intenta reproducir el PRIMER audio (que ya está visible)
+      //    Lo hacemos con un pequeño retraso para asegurar que esté cargado.
+      setTimeout(() => {
+          const firstAudio = document.getElementById('player-1');
+          if (firstAudio) {
+            firstAudio.muted = false; // Quita el silencio
+            let playPromise = firstAudio.play();
+             if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                  console.log("Autoplay del primer audio falló, el usuario debe scrollear.");
+                });
+            }
+          }
+      }, 200); // 200ms de retraso
+
     });
 
   });
