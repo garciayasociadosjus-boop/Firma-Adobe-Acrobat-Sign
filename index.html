@@ -586,7 +586,11 @@ body {
     const observerCallback = (entries, observer) => {
       entries.forEach(entry => {
         const audioNumber = entry.target.id.replace('slide', '');
-        const player = document.getElementById('player-'s + audioNumber);
+        
+        // **** INICIO DE LA CORRECCIÓN ****
+        // Esta era la línea con el error.
+        const player = document.getElementById('player-' + audioNumber);
+        // **** FIN DE LA CORRECCIÓN ****
         
         if (!player) return; // Si el audio no está listo, no hace nada
 
