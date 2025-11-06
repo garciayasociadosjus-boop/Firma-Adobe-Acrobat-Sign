@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Firma Digital - Estudio Garcia & Asociados</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@600;700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+/* 1. THE SETUP */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #e2e8f0;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  margin: 0;
+  min-height: 100vh;
+  padding: 20px 0;
+  place-items: center;
+}
+
+.slide-container {
+  align-items: center;
+  /* Fondo base y degradado "destello" */
+  background: radial-gradient(ellipse at 50% -40%, rgba(31, 41, 55, 0.5) 0%, #0d1b2a 55%);
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 720px;
+  justify-content: flex-start;
+  overflow: hidden;
+  padding: 60px 60px 120px 60px; /* Padding original */
+  position: relative;
+  width: 1280px;
+}
+
+/* 2. NUEVA CAPA DE MARCA DE AGUA (detrás del contenido) */
+.slide-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://i.postimg.cc/LsPWpjy1/BALANZA1.jpg');
+  background-size: cover; /* Para que cubra toda la pantalla */
+  background-repeat: no-repeat;
+  background-position: center; /* Centrada */
+  
+  /* OPACIDAD SÓLO PARA ESTA CAPA */
+  opacity: 0.08; 
+  
+  z-index: 0; /* Se pone detrás del contenido */
+  border-radius: 8px; /* Para que coincida con el contenedor */
+}
+
+/* 3. CONTENIDO (POR ENCIMA DE LA MARCA DE AGUA) */
+/* Todos los hijos directos del slide-container deben estar por encima */
+.slide-container > * {
+    position: relative; /* Necesario para que z-index funcione */
+    z-index: 2; /* Pone todo el contenido por encima del ::before */
+}
+
+/* 4. NUEVA TIPOGRAFÍA (de WEB.HTML) */
+
+/* Fuente de Encabezados: Crimson Text */
+.slide-container h1,
+.slide-container h2,
+.slide-container h3 {
+  color: #FFFFFF; /* Blanco puro, como en la web */
+  font-weight: 700;
+  font-family: 'Crimson Text', serif;
+  margin: 0;
+}
+
+/* Fuente de Cuerpo de Texto: Source Sans Pro */
+.slide-container p,
+.slide-container li,
+.slide-container .subtitle {
+  color: #E5E7EB; /* Color 'silver' de la web */
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Tamaños de fuente consistentes */
+
+.slide-container h1 {
+  font-size: 70px;
+}
+
+.slide-container .slide-title {
+  font-size: 44px; /* Un poco más grande para 'Crimson Text' */
+  font-weight: 700;
+  margin-bottom: 40px;
+  text-align: left;
+  width: 100%;
+}
+
+.slide-container h3 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+/* Tamaño de texto de cuerpo unificado */
+.slide-container p,
+.slide-container li,
+.slide-container .subtitle {
+  font-size: 22px; /* Más grande y legible */
+  line-height: 1.6;
+}
+
+.slide-container .subtitle {
+  font-weight: 400;
+  margin: 20px auto;
+  color: #E5E7EB; /* Color 'silver' */
+}
+
+.slide-container .content-area {
+  align-items: center;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  width: 100%;
+}
+
+/* 5. DEFINICIONES DE LAYOUT (Ajustes menores) */
+
+.title-layout {
+  text-align: center;
+  margin-top: 150px; /* Centrar verticalmente en el layout */
+  width: 100%; /* Asegurar que ocupe todo el ancho */
+}
+
+/* Layout de Dos Columnas */
+.two-column {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  width: 100%;
+}
+
+.two-column ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.two-column li {
+  margin-bottom: 20px;
+  padding-left: 35px;
+  position: relative;
+}
+
+/* Icono de viñeta (Balanza) */
+.two-column li::before {
+  content: '\f24e'; /* Icono 'fa-balance-scale-right' (más sutil) */
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: #E5E7EB; /* Color 'silver' */
+  position: absolute;
+  left: 0;
+  top: 5px;
+  font-size: 20px;
+  opacity: 0.7;
+}
+
+/* Resaltar texto 'strong' con blanco (más elegante) */
+.slide-container strong {
+  color: #FFFFFF;
+  font-weight: 600; /* Un poco más grueso */
+}
+
+.image-wrapper {
+  border-radius: 12px;
+  height: 400px;
+  overflow: hidden;
+  width: 100%;
+  background-color: #1e293b;
+  border: 1px solid rgba(229, 229, 231, 0.2); /* Borde 'silver' */
+}
+
+.image-wrapper img {
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+/* Layout de Título de Sección */
+.section-title-layout {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.section-title-layout h2 {
+  font-size: 60px;
+  margin-bottom: 20px;
+}
+
+.section-title-layout p {
+  font-size: 22px;
+  margin: 0 auto;
+  max-width: 700px;
+  color: #E5E7EB;
+}
+
+.section-title-layout hr {
+  background-color: #E5E7EB; /* Color 'silver' */
+  border: none;
+  height: 2px; /* Más fino */
+  margin: 30px auto;
+  width: 100px;
+  opacity: 0.5;
+}
+
+/* 6. NUEVA DIAPOSITIVA FINAL (Contacto) */
+.contact-layout {
+  text-align: center;
+  width: 100%;
+  align-self: center;
+}
+
+.contact-layout h2 {
+  font-size: 80px;
+  margin-bottom: 40px; /* Más espacio */
+  color: #FFFFFF;
+}
+
+.contact-layout .contact-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.contact-layout .contact-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 20px;
+  color: #E5E7EB;
+}
+
+.contact-layout .contact-item i {
+  font-size: 24px;
+  color: #E5E7EB;
+  width: 30px; /* Ancho fijo para alinear */
+}
+
+.contact-layout .contact-item a {
+  color: #E5E7EB;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-layout .contact-item a:hover {
+  color: #FFFFFF;
+}
+
+/* 7. NUEVO FOOTER (de WEB.HTML) */
+.slide-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #0A0E1A; /* Color '--primary' de la web */
+  padding: 25px 60px; /* Más padding para hacerlo más grande */
+  text-align: center;
+  font-size: 20px; /* Letra más grande */
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+  color: #E5E7EB; /* Color 'silver' */
+  z-index: 10;
+  border-top: 1px solid #374151; /* Borde 'accent' */
+  
+  /* === EFECTO "WOW": LUZ LÍQUIDA === */
+  /* 1. Creamos el gradiente de luz */
+  background-image: linear-gradient(
+    90deg, 
+    #E5E7EB, /* Color base (silver) */
+    #FFFFFF, /* Luz blanca brillante */
+    #E5E7EB  /* Color base (silver) */
+  );
+  background-size: 200% auto; /* El doble de ancho para que se mueva */
+  
+  /* 2. Aplicamos el gradiente SOLO al texto */
+  background-clip: text;
+  -webkit-background-clip: text;
+  
+  /* 3. Ocultamos el color de texto original */
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  
+  /* 4. Animamos la posición del gradiente (6s, lento, lineal) */
+  animation: liquid-light 6s linear infinite;
+  /* La animación "subtle-fade" anterior ha sido eliminada */
+}
+
+/* 8. KEYFRAMES PARA LA LUZ LÍQUIDA */
+@keyframes liquid-light {
+  0% {
+    background-position: 200% 0; /* Empieza desde la derecha */
+  }
+  100% {
+    background-position: -200% 0; /* Termina a la izquierda */
+  }
+}
+
+    </style>
+</head>
+<body>
+
+
+<div class="slide-container" id="slide1">
+    <div class="title-layout">
+        <h1>Cómo Firmar con Adobe Acrobat Sign</h1>
+        <p class="subtitle">Guía para clientes de Estudio Garcia & Asociados</p>
+    </div>
+    <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
+</div>
+
+
+<div class="slide-container" id="slide2">
+    <div class="section-title-layout">
+        <h2>El Proceso de Firma Digital</h2>
+        <hr>
+        <p>Un método seguro y digital para validar sus acuerdos con nosotros.</p>
+    </div>
+    <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
+</div>
+
+
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">Paso 1: Revisar la Solicitud</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <ul>
+                    <li>Recibirá una solicitud por correo electrónico.</li>
+                    <li>Para comenzar, haga clic en el botón azul <strong>'Revisar y firmar'</strong>.</li>
+                </ul>
+            </div>
+            <div>
+                <div class="image-wrapper">
+                    <img src="https://i.postimg.cc/Y2szb5Sj/1.jpg" alt="Paso 1: Revisar correo">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
+</div>
+
+
+<div class="slide-container" id="slide4">
+    <h2 class="slide-title">Paso 2: Completar los Campos</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <ul>
+                    <li>Rellene los campos obligatorios (p.ej., la fecha).</li>
+                    <li>Haga clic en el campo de firma que indica <strong>'Haga clic aqui para firmar'</strong>.</li>
+                </ul>
+            </div>
+            <div>
+                <div class="image-wrapper">
+                    <img src="https://i.postimg.cc/DfMPB9zq/2.jpg" alt="Paso 2: Completar campos">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
+</div>
+
+
+<div class="slide-container" id="slide5">
+    <h2 class="slide-title">Paso 3: Aplicar y Enviar</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <ul>
+                    <li>Su firma digital se aplicará en el documento.</li>
+                    <li>Para finalizar y registrar su conformidad, haga clic en el botón <strong>'Enviar'</strong>.</li>
+                </ul>
+            </div>
+            <div>
+                <div class="image-wrapper">
+                    <img src="https://i.postimg.cc/J725PfhX/3.jpg" alt="Paso 3: Enviar firma">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
+</div>
+
+
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">Paso 4: ¡Todo Listo!</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <ul>
+                    <li>Verá un mensaje de confirmación: <strong>'Ya está todo listo'</strong>.</li>
+                    <li>El proceso ha terminado de forma exitosa.</li>
+                    <li>Puede <strong>'descargar una copia'</strong> del acuerdo firmado.</li>
+                </ul>
+            </div>
+            <div>
+                <div class="image-wrapper">
+                    <img src="https://i.postimg.cc/c1bBXpJR/4.jpg" alt="Paso 4: Confirmación">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
+</div>
+
+
+<div class="slide-container" id="slide7">
+    <div class="contact-layout">
+        <h2>¿Preguntas?</h2>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:garciayasociadosjus@gmail.com">garciayasociadosjus@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>11 6806-3444 / 11 7237-1991</span>
+            </div>
+            <div class="contact-item">
+                <i class="fab fa-instagram"></i>
+                <a href="https://www.instagram.com/garciayasociadosjus/" target="_blank">@garciayasociadosjus</a>
+            </div>
+        </div>
+    </div>
+    <div class="slide-footer">García & Asociados - Estudio Jurídico</div>
+</div>
+
+</body>
+</html>
