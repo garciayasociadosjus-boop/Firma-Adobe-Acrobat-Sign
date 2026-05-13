@@ -854,7 +854,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function preload() {
     audioFiles.forEach((f, i) => {
       const c = document.getElementById('audio-' + (i + 1));
-      if (!c || c.innerHTML !== '') return;
+      if (!c) return;
+      c.innerHTML = '';
       const a = document.createElement('audio');
       a.src = f;
       a.id = 'player-' + (i + 1);
